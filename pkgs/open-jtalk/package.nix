@@ -1,4 +1,8 @@
-{ stdenv, hts-engine }:
+{
+  stdenv,
+  callPackage,
+  hts-engine ? callPackage ./../hts-engine/package.nix { },
+}:
 stdenv.mkDerivation rec {
   pname = "open_jtalk";
   version = "1.11";
