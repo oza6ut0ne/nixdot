@@ -12,10 +12,9 @@ stdenv.mkDerivation rec {
     sha256 = "1359c0jfblmnpm1bwyprvl0fmp215pwv91lag2850dpsf0yyfjah";
   };
 
-  configureScript = ''
-    ./configure
-      --with-hts-engine-header-path=${hts-engine.out}/include
-      --with-hts-engine-library-path=${hts-engine.out}/lib
-      --with-charset=UTF-8
-  '';
+  configureFlags = [
+    "--with-hts-engine-header-path=${hts-engine.out}/include"
+    "--with-hts-engine-library-path=${hts-engine.out}/lib"
+    "--with-charset=UTF-8"
+  ];
 }
