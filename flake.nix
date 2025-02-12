@@ -48,11 +48,11 @@
             };
         in
         {
-          packages =
-            packagesFor pkgs
+          packages = packagesFor pkgs;
 
+          legacyPackages =
             # Static build
-            // lib.mapAttrs' (name: value: lib.nameValuePair (name + "-static") value) (
+            lib.mapAttrs' (name: value: lib.nameValuePair (name + "-static") value) (
               packagesFor pkgs.pkgsStatic
             )
 
