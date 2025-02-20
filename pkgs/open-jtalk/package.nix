@@ -12,6 +12,8 @@ stdenv.mkDerivation rec {
     sha256 = "1359c0jfblmnpm1bwyprvl0fmp215pwv91lag2850dpsf0yyfjah";
   };
 
+  patches = ./fix-dictionary-for-unknown-symbols.patch;
+
   configureFlags = [
     "--with-hts-engine-header-path=${hts-engine.out}/include"
     "--with-hts-engine-library-path=${hts-engine.out}/lib"
