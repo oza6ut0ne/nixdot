@@ -4,12 +4,12 @@
   fetchurl,
 }:
 
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "blobmoji";
   version = "15.0";
 
   src = fetchurl {
-    url = "https://github.com/C1710/blobmoji/releases/download/v${version}/Blobmoji.ttf";
+    url = "https://github.com/C1710/blobmoji/releases/download/v${finalAttrs.version}/Blobmoji.ttf";
     hash = "sha256-3MPWZ1A2ups171dNIiFTJ3C1vZiGy6I8ZF70aUfrePk=";
   };
 
@@ -17,7 +17,7 @@ stdenvNoCC.mkDerivation rec {
 
   installPhase = ''
     runHook preInstall
-    install -Dm644 $src $out/share/fonts/${pname}/Blobmoji.ttf
+    install -Dm644 $src $out/share/fonts/${finalAttrs.pname}/Blobmoji.ttf
     runHook postInstall
   '';
 
@@ -27,4 +27,4 @@ stdenvNoCC.mkDerivation rec {
     license = lib.licenses.ofl;
     platforms = lib.platforms.all;
   };
-}
+})

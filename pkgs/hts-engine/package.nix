@@ -1,11 +1,23 @@
-{ stdenv }:
-stdenv.mkDerivation {
+{
+  lib,
+  stdenv,
+  fetchzip,
+}:
+
+stdenv.mkDerivation (finalAttrs: {
   pname = "hts_engine";
   version = "1.10";
-  src = builtins.fetchTarball {
-    url = "https://downloads.sourceforge.net/hts-engine/hts_engine_API-1.10.tar.gz";
-    sha256 = "0hbwr220wiv1nbvdvahl77061qbq3m39mj0x2bla6p5shd4x23m4";
+
+  src = fetchzip {
+    url = "https://downloads.sourceforge.net/hts-engine/hts_engine_API-${finalAttrs.version}.tar.gz";
+    hash = "sha256-pA7RSYO6XKPoEh3ImkYdeOFgwDkUqt32smFHDoTIfEE=";
   };
 
-  patches = if stdenv.hostPlatform.isMusl then [ ./fix-for-musl.patch ] else [ ];
-}
+  patches = lib.optionals stdenv.hostPlatform.isMusl [ ./fix-for-musl.patch ];
+
+  meta = {
+    description = "Software to synthesize speech waveform from HMMs trained by the HMM-based speech synthesis system (HTS)";
+    homepage = "https://hts-engine.sourceforge.net/";
+    license = lib.licenses.bsd3;
+  };
+})
