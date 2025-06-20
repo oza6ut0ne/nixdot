@@ -4,12 +4,18 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    inputs@{ ... }:
+    inputs@{ self, ... }:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } rec {
-      imports = [ ];
+      imports = [
+        inputs.home-manager.flakeModules.home-manager
+      ];
 
       systems = [
         "x86_64-linux"
@@ -77,6 +83,31 @@
             );
         };
 
-      flake = { };
+      flake = {
+        homeConfigurations.${builtins.getEnv "USER"} =
+          let
+            username = builtins.getEnv "USER";
+            homeDirectory = builtins.getEnv "HOME";
+            localConfFile = "${homeDirectory}/.home.local.nix";
+            localConfExists = builtins.pathExists localConfFile;
+
+            pkgs = import inputs.nixpkgs { };
+            pkgsDot = self.packages.${pkgs.system};
+          in
+          inputs.home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+
+            modules = [
+              ./home.nix
+            ] ++ pkgs.lib.optionals localConfExists [ localConfFile ];
+
+            extraSpecialArgs = {
+              inherit username homeDirectory;
+              inherit self;
+              inherit (pkgs) system;
+              inherit pkgsDot;
+            };
+          };
+      };
     };
 }
