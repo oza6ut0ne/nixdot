@@ -40,6 +40,14 @@
   };
 
   home.activation = {
+    cloneRepository = ''
+      repo_dir="${homeDirectory}/nixdot"
+      conf_dir="${config.xdg.configHome}/home-manager"
+      if [ ! -e "''${repo_dir}" ] && [ ! -e "''${conf_dir}" ]; then
+        run "${pkgs.git}/bin/git" clone $VERBOSE_ARG https://github.com/oza6ut0ne/nixdot.git "''${repo_dir}"
+      fi
+    '';
+
     linkToHomeManagerConfigDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       src_dir="${homeDirectory}/nixdot"
       dst_dir="${config.xdg.configHome}/home-manager"
