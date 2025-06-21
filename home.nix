@@ -5,15 +5,19 @@
   system,
   pkgs,
   pkgsDot,
+  pkgsUnpin,
   username,
   homeDirectory,
   ...
 }:
-
 {
-  home.packages = with pkgs; [
+  home.packages =
+    (with pkgs; [
 
-  ];
+    ])
+    ++ (with pkgsUnpin; [
+
+    ]);
 
   home.file = {
 

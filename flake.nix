@@ -93,6 +93,8 @@
 
             pkgs = import inputs.nixpkgs { };
             pkgsDot = self.packages.${pkgs.system};
+            pkgsUnpin =
+              (builtins.getFlake "github:NixOS/nixpkgs/nixpkgs-unstable").legacyPackages.${pkgs.system};
           in
           inputs.home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
@@ -106,6 +108,7 @@
               inherit self;
               inherit (pkgs) system;
               inherit pkgsDot;
+              inherit pkgsUnpin;
             };
           };
       };
