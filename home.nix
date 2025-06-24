@@ -20,6 +20,7 @@
       nil
       nixfmt-rfc-style
       nix-search-cli
+      pkgsDot.nix-version-search
     ])
     ++ (with pkgsUnpin; [
 
