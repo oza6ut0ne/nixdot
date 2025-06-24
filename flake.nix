@@ -91,10 +91,11 @@
             localConfFile = "${homeDirectory}/.home.local.nix";
             localConfExists = builtins.pathExists localConfFile;
 
-            pkgs = import inputs.nixpkgs { };
+            pkgs = import inputs.nixpkgs { config.allowUnfree = true; };
             pkgsDot = self.packages.${pkgs.system};
-            pkgsUnpin =
-              (builtins.getFlake "github:NixOS/nixpkgs/nixpkgs-unstable").legacyPackages.${pkgs.system};
+            pkgsUnpin = import (builtins.getFlake "github:NixOS/nixpkgs/nixpkgs-unstable") {
+              config.allowUnfree = true;
+            };
           in
           inputs.home-manager.lib.homeManagerConfiguration {
             inherit pkgs;

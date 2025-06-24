@@ -13,7 +13,13 @@
 {
   home.packages =
     (with pkgs; [
+      comma
+      nix-index
+      pkgsDot.nix-index-download-cache
 
+      nil
+      nixfmt-rfc-style
+      nix-search-cli
     ])
     ++ (with pkgsUnpin; [
 
