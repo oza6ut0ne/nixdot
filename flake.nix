@@ -41,10 +41,10 @@
           ];
 
           packagesFor =
-            pkgs:
+            pkgs: directory:
             lib.packagesFromDirectoryRecursive {
               inherit (pkgs) callPackage;
-              directory = ./pkgs;
+              inherit directory;
             };
 
           pkgsCrossFor =
@@ -54,12 +54,12 @@
             };
         in
         {
-          packages = packagesFor pkgs;
+          packages = packagesFor pkgs ./pkgs/cross // packagesFor pkgs ./pkgs/noCross;
 
           legacyPackages =
             # Static build
             lib.mapAttrs' (name: value: lib.nameValuePair (name + "-static") value) (
-              packagesFor pkgs.pkgsStatic
+              packagesFor pkgs.pkgsStatic ./pkgs/cross
             )
 
             # Cross build
@@ -67,7 +67,7 @@
               map (
                 crossSystem:
                 lib.mapAttrs' (name: value: lib.nameValuePair "${name}-cross-${crossSystem}" value) (
-                  packagesFor (pkgsCrossFor crossSystem)
+                  packagesFor (pkgsCrossFor crossSystem) ./pkgs/cross
                 )
               ) crossSystems
             )
@@ -77,7 +77,7 @@
               map (
                 crossSystem:
                 lib.mapAttrs' (name: value: lib.nameValuePair "${name}-static-${crossSystem}" value) (
-                  packagesFor (pkgsCrossFor crossSystem).pkgsStatic
+                  packagesFor (pkgsCrossFor crossSystem).pkgsStatic ./pkgs/cross
                 )
               ) crossSystems
             );
