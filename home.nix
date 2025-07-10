@@ -93,7 +93,7 @@
     dotlocal = {
       exact = false;
       from = {
-        id = "dotlocal";
+        id = "dl";
         type = "indirect";
       };
       to = {
