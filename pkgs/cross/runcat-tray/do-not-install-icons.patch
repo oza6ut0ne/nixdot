@@ -1,0 +1,10 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt.patched
+@@ -17,7 +17,3 @@ include_directories(${APPINDICATOR_INCLUDE_DIRS})
+ add_executable(runcat main.c)
+
+ target_link_libraries(runcat ${APPINDICATOR_LIBRARIES})
+-
+-set(ICONS ./icons/)
+-install(DIRECTORY ${ICONS} DESTINATION $ENV{HOME}/.config/runcat/icons)
+-
