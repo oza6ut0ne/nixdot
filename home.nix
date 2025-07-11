@@ -15,15 +15,18 @@
     (with pkgs; [
       comma
       nix-index
-      pkgsDot.nix-index-download-cache
 
       nil
       nixfmt-rfc-style
       nix-search-cli
-      pkgsDot.nix-version-search
     ])
     ++ (with pkgsUnpin; [
 
+    ])
+    ++ (with pkgsDot; [
+      nix-index-download-cache
+      nix-version-search
+      diff-highlight
     ]);
 
   home.file = {
@@ -35,7 +38,10 @@
   };
 
   programs = {
-
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
   };
 
   services = {
