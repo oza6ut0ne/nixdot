@@ -15,6 +15,14 @@ writeShellApplication {
     mkdir -p "''${cache_dir}"
 
     set -x
-    curl -Lo "''${cache_dir}/files" "https://github.com/nix-community/nix-index-database/releases/latest/download/''${filename}"
+    curl -Lo "''${cache_dir}/files.tmp" "https://github.com/nix-community/nix-index-database/releases/latest/download/''${filename}"
+    if [ "$(stat -c%s "''${cache_dir}/files.tmp")" -lt 32 ]; then
+      rm "''${cache_dir}/files.tmp"
+      echo "''$filename download failed!"
+      exit 1
+    else
+      cp "''${cache_dir}/files" "''${cache_dir}/files.bak"
+      mv "''${cache_dir}/files.tmp" "''${cache_dir}/files"
+    fi
   '';
 }
