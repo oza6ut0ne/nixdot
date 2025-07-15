@@ -6,11 +6,19 @@
   pkgs,
   pkgsDot,
   pkgsUnpin,
+  nixgl,
   username,
   homeDirectory,
   ...
 }:
 {
+  nixGL.packages =
+    if (lib.pathIsRegularFile "/etc/NIXOS") || system != "x86_64-linux" then null else nixgl;
+  nixGL.installScripts = [
+    "mesa"
+    "mesaPrime"
+  ];
+
   home.packages =
     (with pkgs; [
       comma

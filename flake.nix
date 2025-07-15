@@ -3,7 +3,17 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+
+    nixgl = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -96,6 +106,7 @@
             pkgsUnpin = import (builtins.getFlake "github:NixOS/nixpkgs/nixpkgs-unstable") {
               config.allowUnfree = true;
             };
+            nixgl = import inputs.nixgl { inherit pkgs; };
           in
           inputs.home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
@@ -110,6 +121,7 @@
               inherit (pkgs) system;
               inherit pkgsDot;
               inherit pkgsUnpin;
+              inherit nixgl;
             };
           };
       };

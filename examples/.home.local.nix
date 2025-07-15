@@ -6,6 +6,7 @@ args@{
   pkgs,
   pkgsDot,
   pkgsUnpin,
+  nixgl,
   usrename,
   homeDirectory,
   ...
@@ -16,9 +17,17 @@ let
   pkgsTts = (builtins.getFlake "github:oza6ut0ne/tts-server").packages.${system};
 in
 {
+  # nixGL.defaultWrapper = "nvidia";
+  # nixGL.offloadWrapper = "nvidiaPrime";
+  # nixGL.installScripts = [
+  #   "nvidia"
+  #   "nvidiaPrime"
+  # ];
+
   home.packages =
     (with pkgs; [
       # pkgsTts.tts
+      # (config.lib.nixGL.wrap wezterm)
     ])
     ++ (with pkgsUnpin; [
 
