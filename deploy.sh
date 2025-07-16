@@ -14,14 +14,20 @@ Install Nix first!
   echo 'bash-prompt-prefix = (nix:$name)\040'       | sudo tee -a /etc/nix/nix.conf
   echo 'max-jobs = auto'                            | sudo tee -a /etc/nix/nix.conf
   echo 'extra-nix-path = nixpkgs=flake:nixpkgs'     | sudo tee -a /etc/nix/nix.conf
+  echo 'trusted-users = root @sudo @wheel'          | sudo tee -a /etc/nix/nix.conf
+  sudo systemctl restart nix-daemon.service
   . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
 (b) With Determinate System's installer
   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --no-confirm
+  echo 'trusted-users = root @sudo @wheel'          | sudo tee -a /etc/nix/nix.conf
+  sudo systemctl restart nix-daemon.service
   . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
 (c) With Lix installer
   curl --proto '=https' --tlsv1.2 -sSf -L https://install.lix.systems/lix | sh -s -- install --no-confirm
+  echo 'trusted-users = root @sudo @wheel'          | sudo tee -a /etc/nix/nix.conf
+  sudo systemctl restart nix-daemon.service
   . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
   # Also need to install Git to run home-manager with Lix
 
