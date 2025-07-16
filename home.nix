@@ -26,7 +26,9 @@
 
       nil
       nixfmt-rfc-style
+      nix-output-monitor
       nix-search-cli
+      nix-tree
     ])
     ++ (with pkgsUnpin; [
 
