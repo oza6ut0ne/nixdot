@@ -34,6 +34,7 @@
 
     ])
     ++ (with pkgsDot; [
+      nix-bundle-appimage
       nix-index-download-cache
       nix-version-search
       diff-highlight
