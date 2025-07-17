@@ -46,6 +46,7 @@ in
 
   home.sessionVariables = {
     # EDITOR = "vim";
+    # PROMPT_ONELINE = 0;
     # PROMPT_SHORT_PATH = 0;
     # PROMPT_GIT_STATUS = 0;
     # PROMPT_HOST_LABEL = "@";
