@@ -1,0 +1,42 @@
+--- a/main.go
++++ b/main.go
+@@ -22,11 +22,16 @@ type Request struct {
+ 	RepeatPenalty float64 `json:"repeat_penalty"`
+ 	Temperature   float64 `json:"temperature"`
+ 	TopP          float64 `json:"top_p"`
++	Model         string  `json:"model"`
+ }
+ 
+ type Response struct {
+ 	Content string `json:"content"`
+ 
++	Choices []struct {
++		Text string `json:"text"`
++	} `json:"choices"`
++
+ 	GenerationSettings struct {
+ 		DynatempExponent       float64       `json:"dynatemp_exponent"`
+ 		DynatempRange          float64       `json:"dynatemp_range"`
+@@ -121,7 +126,7 @@ func translate(text string, mode string, writingStyle string, subStyles map[stri
+ 	if err != nil {
+ 		return "", fmt.Errorf("failed to request: %w", err)
+ 	}
+-	return res.Content, nil
++	return res.Choices[0].Text, nil
+ }
+ 
+ func reverseMode(mode string) string {
+@@ -152,11 +157,12 @@ func main() {
+ 
+ 	// Core options.
+ 	flag.BoolVar(&verbose, "verbose", false, `verbose messages`)
+-	flag.StringVar(&entrypoint, "entrypoint", "http://127.0.0.1:8080/completions", `entrypoint`)
++	flag.StringVar(&entrypoint, "entrypoint", "http://127.0.0.1:11434/v1/completions", `entrypoint`)
+ 	flag.StringVar(&modeOpt, "mode", "", `translation mode: EtoJ, JtoE or auto (default)`)
+ 	flag.StringVar(&wstyleOpt, "writingstyle", Technical, `writing style`)
+ 
+ 	// Request options.
++	flag.StringVar(&reqTmpl.Model, "model", "hf.co/webbigdata/C3TR-Adapter_gguf", `model name`)
+ 	flag.IntVar(&reqTmpl.NPredict, "n_predict", -1, `number of predict`)
+ 	flag.Float64Var(&reqTmpl.RepeatPenalty, "repeat_penalty", 1.0, `repeat penalty`)
+ 	flag.Float64Var(&reqTmpl.Temperature, "temperature", 0.0, `temperature`)
