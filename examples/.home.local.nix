@@ -13,7 +13,7 @@ args@{
 }:
 
 let
-  pkgsStable = (builtins.getFlake "github:NixOS/nixpkgs/release-25.05").legacyPackages.${system};
+  pkgsStable = import (builtins.getFlake "github:NixOS/nixpkgs/release-25.05") { };
   pkgsTts = (builtins.getFlake "github:oza6ut0ne/tts-server").packages.${system};
 in
 {

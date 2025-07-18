@@ -50,47 +50,16 @@
             "mipsel-linux-gnu"
           ];
 
-          packagesFor =
-            pkgs: directory:
-            lib.packagesFromDirectoryRecursive {
-              inherit (pkgs) callPackage;
-              inherit directory;
-            };
-
-          pkgsCrossFor =
-            crossSystem:
-            import inputs.nixpkgs {
-              inherit system crossSystem;
-            };
+          dotPackages = import ./. {
+            inherit (inputs) nixpkgs;
+            inherit
+              pkgs
+              crossSystems
+              ;
+          };
         in
         {
-          packages = packagesFor pkgs ./pkgs/cross // packagesFor pkgs ./pkgs/noCross;
-
-          legacyPackages =
-            # Static build
-            lib.mapAttrs' (name: value: lib.nameValuePair (name + "-static") value) (
-              packagesFor pkgs.pkgsStatic ./pkgs/cross
-            )
-
-            # Cross build
-            // lib.foldl (acc: elem: acc // elem) { } (
-              map (
-                crossSystem:
-                lib.mapAttrs' (name: value: lib.nameValuePair "${name}-cross-${crossSystem}" value) (
-                  packagesFor (pkgsCrossFor crossSystem) ./pkgs/cross
-                )
-              ) crossSystems
-            )
-
-            # Static cross build
-            // lib.foldl (acc: elem: acc // elem) { } (
-              map (
-                crossSystem:
-                lib.mapAttrs' (name: value: lib.nameValuePair "${name}-static-${crossSystem}" value) (
-                  packagesFor (pkgsCrossFor crossSystem).pkgsStatic ./pkgs/cross
-                )
-              ) crossSystems
-            );
+          inherit (dotPackages) packages legacyPackages;
         };
 
       flake = {
