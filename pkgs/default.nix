@@ -1,9 +1,10 @@
 {
-  nixpkgs ? import <nixpkgs>,
+  nixpkgs ? import ../nixpkgs.nix,
   pkgs ? nixpkgs { },
   lib ? pkgs.lib,
   crossSystems,
 }:
+
 let
   packagesFor =
     pkgs: directory:

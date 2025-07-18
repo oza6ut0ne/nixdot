@@ -1,5 +1,5 @@
 {
-  nixpkgs ? import <nixpkgs>,
+  nixpkgs ? import ./nixpkgs.nix,
   pkgs ? nixpkgs { },
   crossSystems ? [
     "x86_64-linux"
@@ -10,6 +10,7 @@
     "mipsel-linux-gnu"
   ],
 }:
+
 let
   dotPackages = import ./pkgs {
     inherit nixpkgs pkgs crossSystems;
