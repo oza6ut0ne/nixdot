@@ -19,7 +19,7 @@ Install Nix first!
   . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 
 (b) With Determinate System's installer
-  curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --no-confirm
+  curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --diagnostic-endpoint="" --no-confirm
   echo 'trusted-users = root @sudo @wheel'          | sudo tee -a /etc/nix/nix.conf
   sudo systemctl restart nix-daemon.service
   . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
