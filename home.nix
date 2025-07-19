@@ -120,6 +120,12 @@
     };
   };
 
+  nix.nixPath = [
+    "n=flake:nixpkgs"
+    "dot=flake:dot"
+    "dl=flake:dl"
+  ];
+
   home.username = username;
   home.homeDirectory = homeDirectory;
   home.stateVersion = "25.05";
