@@ -21,7 +21,9 @@ writeShellApplication {
       echo "''$filename download failed!"
       exit 1
     else
-      cp "''${cache_dir}/files" "''${cache_dir}/files.bak"
+      if [[ -f ''${cache_dir}/files ]]; then
+        cp "''${cache_dir}/files" "''${cache_dir}/files.bak"
+      fi
       mv "''${cache_dir}/files.tmp" "''${cache_dir}/files"
     fi
   '';
