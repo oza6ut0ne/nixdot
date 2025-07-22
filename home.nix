@@ -107,6 +107,18 @@
       };
     };
 
+    d = {
+      exact = false;
+      from = {
+        id = "d";
+        type = "indirect";
+      };
+      to = {
+        id = "dot";
+        type = "indirect";
+      };
+    };
+
     dotlocal = {
       exact = false;
       from = {
@@ -121,8 +133,10 @@
   };
 
   nix.nixPath = [
+    "nixpkgs=flake:nixpkgs"
     "n=flake:nixpkgs"
     "dot=flake:dot"
+    "d=flake:d"
     "dl=flake:dl"
   ];
 
