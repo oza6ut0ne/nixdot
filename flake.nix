@@ -63,7 +63,7 @@
         };
 
       flake = {
-        homeConfigurations.${builtins.getEnv "USER"} =
+        homeConfigurations =
           let
             username = builtins.getEnv "USER";
             homeDirectory = builtins.getEnv "HOME";
@@ -76,13 +76,6 @@
               config.allowUnfree = true;
             };
             nixgl = import inputs.nixgl { inherit pkgs; };
-          in
-          inputs.home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
-
-            modules = [
-              ./home.nix
-            ] ++ pkgs.lib.optionals localConfExists [ localConfFile ];
 
             extraSpecialArgs = {
               inherit username homeDirectory;
@@ -91,6 +84,31 @@
               inherit pkgsDot;
               inherit pkgsUnpin;
               inherit nixgl;
+            };
+
+            modulesBase = [
+              ./home/common.nix
+            ] ++ pkgs.lib.optionals localConfExists [ localConfFile ];
+          in
+          {
+            ${builtins.getEnv "USER"} = inputs.home-manager.lib.homeManagerConfiguration {
+              inherit pkgs extraSpecialArgs;
+              modules = modulesBase;
+            };
+
+            cli = inputs.home-manager.lib.homeManagerConfiguration {
+              inherit pkgs extraSpecialArgs;
+              modules = modulesBase ++ [
+                ./home/cli.nix
+              ];
+            };
+
+            gui = inputs.home-manager.lib.homeManagerConfiguration {
+              inherit pkgs extraSpecialArgs;
+              modules = modulesBase ++ [
+                ./home/cli.nix
+                ./home/gui.nix
+              ];
             };
           };
       };

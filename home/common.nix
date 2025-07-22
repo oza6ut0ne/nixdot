@@ -29,6 +29,14 @@
       nix-output-monitor
       nix-search-cli
       nix-tree
+
+      bat
+      fd
+      fzf
+      mmv-go
+      mosh
+      ripgrep
+      zoxide
     ])
     ++ (with pkgsUnpin; [
 

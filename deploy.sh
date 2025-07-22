@@ -49,12 +49,23 @@ REPO_DIR_NIXDOT=${HOME}/nixdot
 REPO_DIR_DOTFILES=${HOME}/dotfiles
 CONF_DIR_HOME_MANAGER=${HOME}/.config/home-manager
 
-config_name=${1-}
-if [[ -z $config_name ]]; then
-  flake="."
-else
-  flake=".#$config_name"
+if [[ -d $REPO_DIR_NIXDOT ]]; then
+  config_name_file="$REPO_DIR_NIXDOT/.config_name"
+elif [[ -d $CONF_DIR_HOME_MANAGER ]]; then
+  config_name_file="$CONF_DIR_HOME_MANAGER/.config_name"
 fi
+
+if [ ! -v 1 ]; then
+  if [ -v config_name_file ] && [[ -f $config_name_file ]]; then
+    config_name="$(cat "$config_name_file")"
+  fi
+else
+  config_name="$1"
+  if [ -v config_name_file ];then
+    echo "$config_name" > "$config_name_file"
+  fi
+fi
+flake=".${config_name:+#$config_name}"
 
 if command -v git >/dev/null; then
   GIT=git

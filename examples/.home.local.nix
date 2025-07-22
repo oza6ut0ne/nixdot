@@ -27,7 +27,7 @@ in
   home.packages =
     (with pkgs; [
       # pkgsTts.tts
-      # (config.lib.nixGL.wrap wezterm)
+      # (config.lib.nixGL.wrap alacritty)
     ])
     ++ (with pkgsUnpin; [
 
