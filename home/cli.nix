@@ -27,7 +27,6 @@
       speedtest-cli
       starship
       tea
-      xpra
     ])
     ++ (with pkgsUnpin; [
 

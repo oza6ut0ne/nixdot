@@ -18,6 +18,7 @@
       udev-gothic
       udev-gothic-nf
 
+      xpra
       (config.lib.nixGL.wrap mission-center)
       (config.lib.nixGL.wrap wezterm)
     ])
