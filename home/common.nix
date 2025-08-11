@@ -39,6 +39,8 @@
       mosh
       ripgrep
       zoxide
+
+      (neovim.override {withNodeJs = true;})
     ])
     ++ (with pkgsUnpin; [
 
@@ -51,7 +53,7 @@
     ]);
 
   home.file = {
-
+    ".config/skk/SKK-JISYO.merged.utf8".source = "${pkgsDot.skk-dicts}/share/skk/SKK-JISYO.merged.utf8";
   };
 
   home.sessionVariables = {

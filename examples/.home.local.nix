@@ -41,7 +41,6 @@ in
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
-    # ".config/skk/SKK-JISYO.merged.utf8".source = "${pkgsDot.skk-dicts}/share/skk/SKK-JISYO.merged.utf8";
   };
 
   home.sessionVariables = {
