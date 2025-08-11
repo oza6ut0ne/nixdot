@@ -31,8 +31,10 @@
       nix-tree
 
       bat
+      cmigemo
       fd
       fzf
+      kakasi
       mmv-go
       mosh
       ripgrep
