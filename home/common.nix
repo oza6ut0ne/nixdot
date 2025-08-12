@@ -53,7 +53,7 @@
     ]);
 
   home.file = {
-    ".config/skk/SKK-JISYO.merged.utf8".source = "${pkgsDot.skk-dicts}/share/skk/SKK-JISYO.merged.utf8";
+    ".config/skk/SKK-JISYO.nix.utf8".source = "${pkgsDot.skk-dicts}/share/skk/SKK-JISYO.merged.utf8";
   };
 
   home.sessionVariables = {
