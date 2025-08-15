@@ -38,6 +38,7 @@
       mmv-go
       mosh
       ripgrep
+      unar
       zoxide
 
       (neovim.override {withNodeJs = true;})
