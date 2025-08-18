@@ -38,6 +38,7 @@
       mmv-go
       mosh
       ripgrep
+      tree-sitter
       unar
       zoxide
 
