@@ -42,7 +42,7 @@
       unar
       zoxide
 
-      (neovim.override {withNodeJs = true;})
+      (neovim.override { withNodeJs = true; })
     ])
     ++ (with pkgsUnpin; [
 
@@ -52,7 +52,10 @@
       nix-index-download-cache
       nix-version-search
       diff-highlight
-    ]);
+    ])
+    ++ lib.optionals (builtins.elem "nvidia" config.nixGL.installScripts) [
+      (config.lib.nixGL.wrap pkgs.nvitop)
+    ];
 
   home.file = {
     ".config/skk/SKK-JISYO.nix.utf8".source = "${pkgsDot.skk-dicts}/share/skk/SKK-JISYO.merged.utf8";
