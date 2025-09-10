@@ -41,8 +41,6 @@
       tree-sitter
       unar
       zoxide
-
-      (neovim.override { withNodeJs = true; })
     ])
     ++ (with pkgsUnpin; [
 
@@ -69,6 +67,11 @@
     direnv = {
       enable = true;
       nix-direnv.enable = true;
+    };
+    neovim = {
+      enable = true;
+      withNodeJs = true;
+      extraPython3Packages = ps: with ps; [ debugpy ];
     };
   };
 
