@@ -38,6 +38,7 @@ set +x
 main() {
   case "${1-}" in
     off*) install_official;;
+    mod*) install_official_modern;;
     det*) install_determinate;;
     lix)  install_lix;;
     por*) install_portable;;
@@ -73,6 +74,27 @@ install_official() {
   echo 'max-jobs = auto'                            | ${SUDO} tee -a /etc/nix/nix.conf
   echo 'extra-nix-path = nixpkgs=flake:nixpkgs'     | ${SUDO} tee -a /etc/nix/nix.conf
   echo 'trusted-users = root @sudo @wheel'          | ${SUDO} tee -a /etc/nix/nix.conf
+  if [ "$SYSTEMD_ENABLED" = "1" ]; then
+    ${SUDO} systemctl restart nix-daemon.service
+  fi
+  set +x
+
+  echo To get started using Nix, open a new shell or run
+  echo '`. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh`'
+}
+
+install_official_modern() {
+  set -x
+  install_dependencies
+
+  opts='--no-confirm'
+  if [ "$SYSTEMD_ENABLED" = "0" ]; then
+    opts="${opts} --init none"
+  fi
+
+  curl -sSfL https://artifacts.nixos.org/nix-installer | sh -s -- install linux ${opts}
+  echo 'trusted-users = root @sudo @wheel'          | ${SUDO} tee -a /etc/nix/nix.conf
+
   if [ "$SYSTEMD_ENABLED" = "1" ]; then
     ${SUDO} systemctl restart nix-daemon.service
   fi
