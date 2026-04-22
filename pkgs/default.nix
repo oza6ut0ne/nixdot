@@ -16,7 +16,7 @@ let
   pkgsCrossFor =
     crossSystem:
     import nixpkgs {
-      inherit (pkgs) system;
+      inherit (pkgs.stdenv.hostPlatform) system;
       inherit crossSystem;
     };
 in

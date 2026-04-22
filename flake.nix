@@ -71,7 +71,7 @@
             localConfExists = builtins.pathExists localConfFile;
 
             pkgs = import inputs.nixpkgs { config.allowUnfree = true; };
-            pkgsDot = self.packages.${pkgs.system};
+            pkgsDot = self.packages.${pkgs.stdenv.hostPlatform.system};
             pkgsUnpin = import (builtins.getFlake "github:NixOS/nixpkgs/nixpkgs-unstable") {
               config.allowUnfree = true;
             };
@@ -80,7 +80,7 @@
             extraSpecialArgs = {
               inherit username homeDirectory;
               inherit self;
-              inherit (pkgs) system;
+              inherit (pkgs.stdenv.hostPlatform) system;
               inherit pkgsDot;
               inherit pkgsUnpin;
               inherit nixgl;

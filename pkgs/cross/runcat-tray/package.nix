@@ -29,7 +29,10 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-Gq8FhBnvWEx+g9R7QkAb4cAT/cn8Mk6gAfnH+viwb+s=";
   };
 
-  patches = [ ./do-not-install-icons.patch ];
+  patches = [
+    ./do-not-install-icons.patch
+    ./fix-incompatible-pointer-types.patch
+  ];
 
   nativeBuildInputs = [
     cmake

@@ -1,0 +1,13 @@
+diff --git a/main.c b/main.c
+index 2f87a74..316fafb 100644
+--- a/main.c
++++ b/main.c
+@@ -55,7 +55,7 @@ GtkWidget *root, *item_cpu, *item_quit, *item_mode_menu;
+ AppIndicator *indicator;
+ GError *error = NULL;
+
+-static gboolean get_cpu_usage() {
++static gboolean get_cpu_usage(gpointer user_data) {
+   FILE *fd = fopen(PROC_STAT, "r");
+   if (fd == NULL) {
+     g_print("failed to open %s\n", PROC_STAT);

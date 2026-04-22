@@ -12,12 +12,13 @@
   ...
 }:
 {
-  nixGL.packages =
-    if (lib.pathIsRegularFile "/etc/NIXOS") || system != "x86_64-linux" then null else nixgl;
-  nixGL.installScripts = [
-    "mesa"
-    "mesaPrime"
-  ];
+  targets.genericLinux.nixGL = {
+    packages = if (lib.pathIsRegularFile "/etc/NIXOS") || system != "x86_64-linux" then null else nixgl;
+    installScripts = [
+      "mesa"
+      "mesaPrime"
+    ];
+  };
 
   home.packages =
     (with pkgs; [
@@ -25,7 +26,7 @@
       nix-index
 
       nil
-      nixfmt-rfc-style
+      nixfmt
       nix-output-monitor
       nix-search-cli
       nix-tree
@@ -51,7 +52,7 @@
       nix-version-search
       diff-highlight
     ])
-    ++ lib.optionals (builtins.elem "nvidia" config.nixGL.installScripts) [
+    ++ lib.optionals (builtins.elem "nvidia" config.targets.genericLinux.nixGL.installScripts) [
       (config.lib.nixGL.wrap pkgs.nvitop)
     ];
 
@@ -70,6 +71,8 @@
     };
     neovim = {
       enable = true;
+      sideloadInitLua = true;
+      withPython3 = true;
       withNodeJs = true;
       extraPython3Packages = ps: with ps; [ debugpy ];
     };
@@ -162,6 +165,6 @@
 
   home.username = username;
   home.homeDirectory = homeDirectory;
-  home.stateVersion = "25.05";
+  home.stateVersion = "26.05";
   programs.home-manager.enable = true;
 }

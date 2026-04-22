@@ -17,12 +17,14 @@ let
   pkgsTts = (builtins.getFlake "github:oza6ut0ne/tts-server").packages.${system};
 in
 {
-  # nixGL.defaultWrapper = "nvidia";
-  # nixGL.offloadWrapper = "nvidiaPrime";
-  # nixGL.installScripts = [
-  #   "nvidia"
-  #   "nvidiaPrime"
-  # ];
+  targets.genericLinux.nixGL = {
+    # defaultWrapper = "nvidia";
+    # offloadWrapper = "nvidiaPrime";
+    # installScripts = [
+    #   "nvidia"
+    #   "nvidiaPrime"
+    # ];
+  };
 
   home.packages =
     (with pkgs; [
