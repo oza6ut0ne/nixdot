@@ -87,7 +87,7 @@ install_official_modern() {
   set -x
   install_dependencies
 
-  opts='--no-confirm'
+  opts='--no-confirm --enable-flakes'
   if [ "$SYSTEMD_ENABLED" = "0" ]; then
     opts="${opts} --init none"
   fi
