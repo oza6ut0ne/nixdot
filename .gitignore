@@ -1,4 +1,5 @@
 .config_name
+nix-portable
 /result
 /*-arx
 /*.AppImage

@@ -8,7 +8,7 @@ exists() {
 }
 
 usage() {
-  echo "Usage: ./install_nix.sh { official | determinate | lix | portable }"
+  echo "Usage: ./install_nix.sh { official | modern | determinate | lix | portable }"
 }
 
 if [ "$#" -ne 1 ]; then
