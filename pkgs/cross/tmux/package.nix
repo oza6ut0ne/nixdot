@@ -11,13 +11,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "tmux";
-  version = "unstable-2025-08-26";
+  version = "unstable-2026-09-02";
 
   src = fetchFromGitHub {
     owner = "tmux";
     repo = "tmux";
-    rev = "0c9165fc713d9297e59c210659e61ab6993b1b3e";
-    hash = "sha256-PMFqIAHbMG8piTl2E7UNDvm70/qhbWTf/NNhtgI6xU0=";
+    rev = "9fa390aee696f7c3886bc9146e4051cbbe9593cb";
+    hash = "sha256-b7Zo3PGMU1Tlbj1yrSSx2gUGTdETCmPj3GkeOa/i9pQ=";
   };
 
   nativeBuildInputs = [
