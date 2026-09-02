@@ -27,6 +27,7 @@
 
       nil
       nixfmt
+      nix-init
       nix-output-monitor
       nix-search-cli
       nix-tree
